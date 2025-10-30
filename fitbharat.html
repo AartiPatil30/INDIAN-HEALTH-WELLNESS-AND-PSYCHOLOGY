@@ -1,0 +1,810 @@
+<!--
+FitBharat — Final Single-file Website (index.html)
+
+Instructions:
+1. Save this entire file as `index.html` in a folder named `FitBharat`.
+2. (Optional) Create folders `css/`, `js/`, `images/` if you want to split files later.
+3. Open `index.html` in any modern browser to run offline, or push to GitHub and enable GitHub Pages to host it.
+
+What this final file includes (IHWP-ready):
+- Responsive layout (HTML + internal CSS)
+- Navbar and sections: Home, Yoga, Workout, Diet, Psychology (Mood tracker + affirmations), Community
+- Workout tracker with add/remove and localStorage
+- BMI calculator
+- Daily checklist persisted in localStorage
+- Mindfulness breathing timer with simple circle animation and textual prompts
+- Daily affirmation popup that appears on load and a button to get a new affirmation
+- Mood tracker with history saved in localStorage (shows last 7 entries)
+- Small README header and clear comments for easy customization
+
+Author: FitBharat — Prepared for Indian Health, Wellness & Psychology (IHWP) submission • 2025
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FitBharat — Indian Health, Wellness & Psychology (IHWP)</title>
+    <meta
+      name="description"
+      content="FitBharat: a student project for IHWP combining yoga, fitness, Indian diet tips and psychological wellbeing."
+    />
+    <style>
+      /* ========== Basic Reset & Variables ========== */
+      :root {
+        --accent: #0f766e;
+        --accent-2: #0ea5e9;
+        --muted: #6b7280;
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --radius: 12px;
+        --maxw: 1100px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial;
+        margin: 0;
+        background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+        color: #07203a;
+      }
+      a {
+        color: inherit;
+      }
+      .container {
+        max-width: var(--maxw);
+        margin: 18px auto;
+        padding: 0 18px;
+      }
+      header {
+        background: linear-gradient(
+          90deg,
+          rgba(15, 118, 110, 0.08),
+          rgba(14, 165, 233, 0.03)
+        );
+        padding: 14px 0;
+        position: sticky;
+        top: 0;
+        z-index: 30;
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+      .brand {
+        font-weight: 800;
+        color: var(--accent);
+        font-size: 20px;
+      }
+      nav a {
+        color: var(--muted);
+        text-decoration: none;
+        font-weight: 600;
+      }
+      nav a:hover {
+        color: var(--accent);
+      }
+
+      /* layout */
+      .hero {
+        display: flex;
+        gap: 18px;
+        align-items: center;
+        padding: 18px;
+        background: var(--card);
+        border-radius: var(--radius);
+        box-shadow: 0 6px 18px rgba(2, 6, 23, 0.06);
+      }
+      .hero h1 {
+        margin: 0;
+        font-size: 20px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 360px;
+        gap: 20px;
+        margin-top: 18px;
+      }
+      @media (max-width: 980px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .card {
+        background: var(--card);
+        border-radius: 12px;
+        padding: 14px;
+        box-shadow: 0 6px 18px rgba(2, 6, 23, 0.04);
+      }
+      h2 {
+        margin: 0 0 10px;
+        font-size: 16px;
+      }
+      p {
+        margin: 0 0 12px;
+        color: var(--muted);
+      }
+      .muted {
+        color: var(--muted);
+      }
+
+      /* poses */
+      .poses {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      @media (max-width: 480px) {
+        .poses {
+          grid-template-columns: 1fr;
+        }
+      }
+      .pose {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        cursor: pointer;
+      }
+      .pose img {
+        width: 72px;
+        height: 72px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+
+      /* workout list */
+      .workout-input {
+        display: flex;
+        gap: 8px;
+        margin-top: 8px;
+      }
+      .workout-input input {
+        flex: 1;
+        padding: 8px;
+        border-radius: 8px;
+        border: 1px solid #e6eef2;
+      }
+      .btn {
+        background: transparent;
+        border: 1px solid var(--accent);
+        padding: 6px 10px;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: white;
+        border: none;
+      }
+      .workout-list {
+        list-style: none;
+        padding: 0;
+        margin: 10px 0 0;
+        max-height: 260px;
+        overflow: auto;
+      }
+      .workout-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px;
+        border-radius: 8px;
+        border: 1px solid #f1f5f9;
+        margin-bottom: 8px;
+      }
+
+      /* right column widgets */
+      .widget {
+        margin-bottom: 14px;
+      }
+      .row {
+        display: flex;
+        gap: 8px;
+      }
+      .row input,
+      select {
+        flex: 1;
+        padding: 8px;
+        border-radius: 8px;
+        border: 1px solid #e6eef2;
+      }
+
+      /* checklist */
+      .checklist {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      /* breathing animation */
+      .breath-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+      .breath-circle {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 6px solid rgba(15, 118, 110, 0.12);
+        transition: all 1s ease;
+      }
+      .breath-text {
+        font-weight: 700;
+      }
+
+      /* affirmation popup */
+      .modal {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(2, 6, 23, 0.35);
+        z-index: 60;
+      }
+      .modal-card {
+        background: var(--card);
+        padding: 18px;
+        border-radius: 12px;
+        max-width: 420px;
+        text-align: center;
+        box-shadow: 0 12px 40px rgba(2, 6, 23, 0.2);
+      }
+      .affirmation {
+        background: #dcfce7;
+        padding: 12px;
+        border-radius: 8px;
+        margin: 12px 0;
+        font-style: italic;
+        color: #065f46;
+      }
+
+      /* mood history */
+      .mood-history {
+        max-height: 160px;
+        overflow: auto;
+        padding: 6px;
+        border-radius: 8px;
+        border: 1px solid #eef2f6;
+      }
+      .mood-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px;
+        border-bottom: 1px solid #f1f5f9;
+      }
+
+      footer {
+        text-align: center;
+        padding: 18px;
+        margin-top: 18px;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Affirmation Modal (shown on load) -->
+    <div id="modalAffirm" class="modal" style="display: none">
+      <div class="modal-card">
+        <h3>🌞 Daily Affirmation</h3>
+        <div id="modalAffText" class="affirmation">
+          You are strong and capable.
+        </div>
+        <div
+          style="
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 8px;
+          "
+        >
+          <button id="modalNew" class="btn">New</button>
+          <button id="modalClose" class="btn btn-primary">Let's Start</button>
+        </div>
+      </div>
+    </div>
+
+    <header>
+      <div class="container nav">
+        <div class="brand">FitBharat</div>
+        <nav
+          style="
+            margin-left: auto;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+          "
+        >
+          <a href="#home">Home</a>
+          <a href="#yoga">Yoga</a>
+          <a href="#workout">Workout</a>
+          <a href="#diet">Diet</a>
+          <a href="#psychology">Mind</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section id="home" class="hero">
+        <div style="flex: 1">
+          <h1>FitBharat — Indian Health, Wellness & Psychology (IHWP)</h1>
+          <p class="muted">
+            A student project combining yoga, fitness, Indian diet wisdom, and
+            mental health practices.
+          </p>
+          <div style="margin-top: 10px">
+            <a class="btn-primary" href="#workout">Start Today</a>
+          </div>
+        </div>
+        <div class="muted" style="min-width: 220px; text-align: right">
+          Prepared for IHWP • 2025
+        </div>
+      </section>
+
+      <div class="grid">
+        <!-- Left column -->
+        <section>
+          <!-- Yoga -->
+          <article id="yoga" class="card">
+            <h2>🧘 Yoga Poses & Benefits</h2>
+            <p>
+              Simple poses to include in a daily routine. Click to view a short
+              description.
+            </p>
+            <div class="poses" id="poses">
+              <div
+                class="pose"
+                data-name="Tadasana"
+                data-desc="Mountain pose — posture and balance improvement."
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1549576490-b0b4831ef60a?auto=format&fit=crop&w=300&q=60"
+                  alt="Tadasana"
+                />
+                <div>
+                  <b>Tadasana</b><br /><span class="muted">Posture</span>
+                </div>
+              </div>
+              <div
+                class="pose"
+                data-name="Vrikshasana"
+                data-desc="Tree pose — leg strength and focus."
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1554344727-7f9e2f9e0b5b?auto=format&fit=crop&w=300&q=60"
+                  alt="Vrikshasana"
+                />
+                <div>
+                  <b>Vrikshasana</b><br /><span class="muted">Balance</span>
+                </div>
+              </div>
+              <div
+                class="pose"
+                data-name="Bhujangasana"
+                data-desc="Cobra pose — opens chest and relieves mild backache."
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1543168256-4188115766f1?auto=format&fit=crop&w=300&q=60"
+                  alt="Bhujangasana"
+                />
+                <div>
+                  <b>Bhujangasana</b><br /><span class="muted"
+                    >Back Health</span
+                  >
+                </div>
+              </div>
+              <div
+                class="pose"
+                data-name="Savasana"
+                data-desc="Corpse pose — relaxation and stress reduction."
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=300&q=60"
+                  alt="Savasana"
+                />
+                <div>
+                  <b>Savasana</b><br /><span class="muted">Relaxation</span>
+                </div>
+              </div>
+            </div>
+            <div id="poseDetails" class="muted" style="margin-top: 10px">
+              Click any pose to see details here.
+            </div>
+          </article>
+
+          <!-- Workout -->
+          <article id="workout" class="card" style="margin-top: 16px">
+            <h2>🏃 Daily Workout Tracker</h2>
+            <p>
+              Add quick exercises and mark them done. Items persist in your
+              browser.
+            </p>
+            <div class="workout-input">
+              <input
+                id="workoutInput"
+                placeholder="e.g. 15 squats"
+                aria-label="workout input"
+              />
+              <button id="addWorkout" class="btn btn-primary">Add</button>
+            </div>
+            <ul id="workoutList" class="workout-list" aria-live="polite"></ul>
+          </article>
+
+          <!-- Diet -->
+          <article id="diet" class="card" style="margin-top: 16px">
+            <h2>🥗 Indian Diet Tips</h2>
+            <p>
+              Balanced eating rooted in Indian traditions — seasonal produce,
+              whole grains, lentils and mindful eating.
+            </p>
+            <ul>
+              <li>Start with warm water and soaked nuts in the morning.</li>
+              <li>Include dal/legumes and a vegetable with each meal.</li>
+              <li>
+                Prefer millets and whole grains; reduce refined sugar and fried
+                snacks.
+              </li>
+              <li>Include curd or buttermilk for gut health.</li>
+            </ul>
+          </article>
+
+          <!-- Psychology -->
+          <article id="psychology" class="card" style="margin-top: 16px">
+            <h2>🧠 Psychological Wellness</h2>
+            <p>
+              Track your mood, practice affirmations, and use short breathing
+              sessions to improve mental health.
+            </p>
+
+            <!-- Mood tracker -->
+            <div style="margin-top: 8px">
+              <label for="moodSelect">Mood today:</label>
+              <div class="row" style="margin-top: 6px">
+                <select id="moodSelect">
+                  <option value="Happy">😊 Happy</option>
+                  <option value="Calm">😌 Calm</option>
+                  <option value="Stressed">😣 Stressed</option>
+                  <option value="Tired">🥱 Tired</option>
+                  <option value="Motivated">💪 Motivated</option>
+                </select>
+                <button id="saveMood" class="btn">Save</button>
+              </div>
+              <div id="moodDisplay" class="muted" style="margin-top: 8px"></div>
+            </div>
+
+            <div style="margin-top: 12px">
+              <h3>Daily Affirmation</h3>
+              <div id="affirmationBox" class="affirmation">
+                I am calm, centered, and capable.
+              </div>
+              <div style="margin-top: 8px">
+                <button id="newAffirm" class="btn">New Affirmation</button>
+              </div>
+            </div>
+
+            <div style="margin-top: 12px">
+              <h3>Mood History (last 7)</h3>
+              <div id="moodHistory" class="mood-history"></div>
+            </div>
+          </article>
+
+          <!-- Community -->
+          <article class="card" style="margin-top: 16px">
+            <h2>🤝 Community & Culture</h2>
+            <p>
+              Indian wellness emphasizes social support, seva (volunteer work),
+              and family bonds — important for mental wellbeing. Join local yoga
+              groups or online communities for support.
+            </p>
+          </article>
+        </section>
+
+        <!-- Right column -->
+        <aside>
+          <div class="card widget">
+            <h2>⚖️ BMI Calculator</h2>
+            <p class="muted">Enter height (cm) and weight (kg)</p>
+            <div class="row">
+              <input id="height" type="number" placeholder="Height (cm)" />
+              <input id="weight" type="number" placeholder="Weight (kg)" />
+            </div>
+            <div
+              style="
+                display: flex;
+                gap: 8px;
+                margin-top: 8px;
+                align-items: center;
+              "
+            >
+              <button id="calcBMI" class="btn btn-primary">Calculate</button>
+              <div
+                id="bmiResult"
+                style="margin-left: auto; font-weight: 700"
+              ></div>
+            </div>
+          </div>
+
+          <div class="card widget">
+            <h2>🌬️ Mindful Breathing</h2>
+            <p class="muted">
+              4-4-6 breathing: inhale 4s, hold 4s, exhale 6s. Use the circle to
+              follow.
+            </p>
+            <div class="breath-wrap" style="margin-top: 8px">
+              <div id="breathCircle" class="breath-circle">
+                <div id="breathLabel" class="breath-text">Ready</div>
+              </div>
+              <div style="display: flex; gap: 8px">
+                <button id="startBreath" class="btn btn-primary">Start</button>
+                <button id="stopBreath" class="btn">Stop</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card widget">
+            <h2>✅ Daily Checklist</h2>
+            <div class="checklist" id="checklist">
+              <label
+                ><input type="checkbox" data-key="water" /> Drink 2L
+                water</label
+              >
+              <label
+                ><input type="checkbox" data-key="yoga" /> 15 min yoga</label
+              >
+              <label
+                ><input type="checkbox" data-key="walk" /> 30 min walk</label
+              >
+              <label
+                ><input type="checkbox" data-key="sleep" /> 7-8 hours
+                sleep</label
+              >
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <footer>
+        © 2025 FitBharat • Indian Health, Wellness & Psychology (IHWP) —
+        Prepared by [Your Name]
+      </footer>
+    </main>
+
+    <!-- ======= JavaScript: functionality & persistence ======= -->
+    <script>
+      // Helper selectors
+      const qs = (s) => document.querySelector(s);
+      const qsa = (s) => document.querySelectorAll(s);
+
+      /* ---------------- Yoga pose click details ---------------- */
+      qs("#poses").addEventListener("click", (e) => {
+        const el = e.target.closest(".pose");
+        if (!el) return;
+        const name = el.dataset.name,
+          desc = el.dataset.desc;
+        qs("#poseDetails").textContent = name + " — " + desc;
+      });
+
+      /* ---------------- Workout tracker (localStorage) ---------------- */
+      const WORK_KEY = "fitbharat_workouts_v3";
+      const workoutListEl = qs("#workoutList");
+      function loadWorkouts() {
+        const arr = JSON.parse(localStorage.getItem(WORK_KEY) || "[]");
+        workoutListEl.innerHTML = "";
+        arr.forEach((t, i) => {
+          const li = document.createElement("li");
+          li.innerHTML = `<span>${escapeHtml(
+            t
+          )}</span><div><button class=\"btn\" data-i=\"${i}\">Remove</button></div>`;
+          workoutListEl.appendChild(li);
+        });
+      }
+      qs("#addWorkout").addEventListener("click", () => {
+        const v = qs("#workoutInput").value.trim();
+        if (!v) return;
+        const arr = JSON.parse(localStorage.getItem(WORK_KEY) || "[]");
+        arr.push(v);
+        localStorage.setItem(WORK_KEY, JSON.stringify(arr));
+        qs("#workoutInput").value = "";
+        loadWorkouts();
+      });
+      workoutListEl.addEventListener("click", (e) => {
+        if (e.target.matches("button[data-i]")) {
+          const i = +e.target.dataset.i;
+          const arr = JSON.parse(localStorage.getItem(WORK_KEY) || "[]");
+          arr.splice(i, 1);
+          localStorage.setItem(WORK_KEY, JSON.stringify(arr));
+          loadWorkouts();
+        }
+      });
+      loadWorkouts();
+
+      /* ---------------- BMI ---------------- */
+      qs("#calcBMI").addEventListener("click", () => {
+        const h = Number(qs("#height").value),
+          w = Number(qs("#weight").value);
+        if (!h || !w) {
+          qs("#bmiResult").textContent = "—";
+          return;
+        }
+        const bmi = +(w / (h / 100) ** 2).toFixed(1);
+        let cat = "Normal";
+        if (bmi < 18.5) cat = "Underweight";
+        else if (bmi >= 25) cat = "Overweight";
+        qs("#bmiResult").textContent = bmi + " (" + cat + ")";
+      });
+
+      /* ---------------- Checklist persistence ---------------- */
+      qsa("#checklist input[type=checkbox]").forEach((cb) => {
+        const key = "fitbharat_check_" + cb.dataset.key;
+        const val = localStorage.getItem(key);
+        cb.checked = val === "1";
+        cb.addEventListener("change", () =>
+          localStorage.setItem(key, cb.checked ? "1" : "0")
+        );
+      });
+
+      /* ---------------- Breathing timer & simple animation ---------------- */
+      let breathTimer = null;
+      let breathPhase = 0;
+      let breathSec = 0;
+      let breathCycle = 0;
+      const breathPhases = [
+        { name: "Inhale", secs: 4, scale: 1.4 },
+        { name: "Hold", secs: 4, scale: 1.0 },
+        { name: "Exhale", secs: 6, scale: 0.6 },
+      ];
+      const breathCircle = qs("#breathCircle");
+      const breathLabel = qs("#breathLabel");
+      function startBreath(cycles = 3) {
+        stopBreath();
+        breathPhase = 0;
+        breathCycle = 0;
+        breathSec = breathPhases[0].secs;
+        breathLabel.textContent = `${breathPhases[0].name} (${breathSec}s)`;
+        breathCircle.style.transform = `scale(${breathPhases[0].scale})`;
+        breathTimer = setInterval(() => {
+          breathSec--;
+          if (breathSec <= 0) {
+            breathPhase++;
+            if (breathPhase >= breathPhases.length) {
+              breathPhase = 0;
+              breathCycle++;
+              if (breathCycle >= cycles) {
+                stopBreath();
+                return;
+              }
+            }
+            breathSec = breathPhases[breathPhase].secs;
+            breathCircle.style.transform = `scale(${breathPhases[breathPhase].scale})`;
+          }
+          breathLabel.textContent = `${breathPhases[breathPhase].name} (${breathSec}s)`;
+        }, 1000);
+      }
+      function stopBreath() {
+        if (breathTimer) clearInterval(breathTimer);
+        breathTimer = null;
+        breathLabel.textContent = "Ready";
+        breathCircle.style.transform = "scale(1)";
+      }
+      qs("#startBreath").addEventListener("click", () => startBreath(3));
+      qs("#stopBreath").addEventListener("click", stopBreath);
+
+      /* ---------------- Affirmations modal + box ---------------- */
+      const affirmations = [
+        "I am calm, focused, and ready to take on today.",
+        "My body is strong, my mind is clear, my spirit is peaceful.",
+        "Every breath I take fills me with positive energy.",
+        "I choose happiness and health every day.",
+        "My thoughts are powerful, my actions are meaningful.",
+        "I am grateful for my healthy body and peaceful mind.",
+        "I radiate positivity and inner peace.",
+        "I grow stronger, healthier, and happier each day.",
+        "My mind and body are in perfect harmony.",
+        "I am capable of overcoming stress with calmness and grace.",
+      ];
+      function randAff() {
+        return affirmations[Math.floor(Math.random() * affirmations.length)];
+      }
+      // modal actions
+      const modal = qs("#modalAffirm");
+      const modalText = qs("#modalAffText");
+      const modalNew = qs("#modalNew");
+      const modalClose = qs("#modalClose");
+      modalNew.addEventListener("click", () => {
+        modalText.textContent = randAff();
+      });
+      modalClose.addEventListener("click", () => {
+        modal.style.display = "none";
+        qs("#affirmationBox").textContent = modalText.textContent;
+        localStorage.setItem("fitbharat_affirm", modalText.textContent);
+      });
+      // show modal on first load each day (store date)
+      (function showDailyModal() {
+        const key = "fitbharat_affirm_shown";
+        const today = new Date().toISOString().slice(0, 10);
+        if (localStorage.getItem(key) !== today) {
+          modal.style.display = "flex";
+          modalText.textContent = randAff();
+          localStorage.setItem(key, today);
+        } else {
+          const aff = localStorage.getItem("fitbharat_affirm") || randAff();
+          qs("#affirmationBox").textContent = aff;
+        }
+      })();
+      qs("#newAffirm").addEventListener("click", () => {
+        const a = randAff();
+        qs("#affirmationBox").textContent = a;
+        localStorage.setItem("fitbharat_affirm", a);
+      });
+
+      /* ---------------- Mood tracker with history ---------------- */
+      const MOOD_KEY = "fitbharat_mood_history";
+      const moodSel = qs("#moodSelect");
+      const moodDisp = qs("#moodDisplay");
+      const moodHistoryEl = qs("#moodHistory");
+      function loadMood() {
+        const hist = JSON.parse(localStorage.getItem(MOOD_KEY) || "[]");
+        if (hist.length) {
+          moodDisp.textContent = "Last: " + hist[0].mood + " • " + hist[0].date;
+        } else moodDisp.textContent = "";
+        renderMoodHistory();
+      }
+      function renderMoodHistory() {
+        const hist = JSON.parse(localStorage.getItem(MOOD_KEY) || "[]");
+        moodHistoryEl.innerHTML = "";
+        hist.slice(0, 7).forEach((h) => {
+          const div = document.createElement("div");
+          div.className = "mood-item";
+          div.innerHTML = `<div>${escapeHtml(
+            h.mood
+          )}</div><div class=\"muted\">${h.date}</div>`;
+          moodHistoryEl.appendChild(div);
+        });
+      }
+      qs("#saveMood").addEventListener("click", () => {
+        const m = moodSel.value;
+        const date = new Date().toLocaleString();
+        const hist = JSON.parse(localStorage.getItem(MOOD_KEY) || "[]");
+        hist.unshift({ mood: m, date: date });
+        localStorage.setItem(MOOD_KEY, JSON.stringify(hist.slice(0, 20)));
+        loadMood();
+      });
+      loadMood();
+
+      /* ---------------- small helpers ---------------- */
+      function escapeHtml(s) {
+        return String(s)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;");
+      }
+
+      /* Accessibility: close modal with Esc */
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          modal.style.display = "none";
+        }
+      });
+
+      // ensure UI populated correctly on start
+      document.addEventListener("DOMContentLoaded", () => {
+        if (!qs("#bmiResult").textContent) qs("#bmiResult").textContent = "";
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FitBharat — Indian Health, Wellness & Psychology (IHWP)</title>
+    <meta
+      name="description"
+      content="FitBharat: A student project for IHWP combining yoga, fitness, Indian diet tips and psychological wellbeing."
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- Affirmation Modal -->
+    <div id="modalAffirm" class="modal" style="display: none">
+      <div class="modal-card">
+        <h3>🌞 Daily Affirmation</h3>
+        <div id="modalAffText" class="affirmation">
+          You are strong and capable.
+        </div>
+        <div class="modal-btns">
+          <button id="modalNew" class="btn">New</button>
+          <button id="modalClose" class="btn btn-primary">Let's Start</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+      <div class="navbar">
+        <div class="brand">🌿 FitBharat</div>
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <nav id="navMenu">
+          <a href="#home">Home</a>
+          <a href="#yoga">Yoga</a>
+          <a href="#workout">Workout</a>
+          <a href="#diet">Diet</a>
+          <a href="#psychology">Mind</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="container">
+      <section id="home" class="hero">
+        <div>
+          <h1>FitBharat — Indian Health, Wellness & Psychology (IHWP)</h1>
+          <p>
+            A student project combining yoga, fitness, Indian diet wisdom, and
+            mental health practices.
+          </p>
+          <a class="btn-primary" href="#workout">Start Today</a>
+        </div>
+      </section>
+
+      <div class="grid">
+        <section>
+          <article id="yoga" class="card">
+            <h2>🧘 Yoga Poses & Benefits</h2>
+            <p>
+              Simple poses to include in a daily routine. Click to view a short
+              description.
+            </p>
+            <div class="poses" id="poses">
+              <div
+                class="pose"
+                data-name="Tadasana"
+                data-desc="Mountain pose — posture and balance improvement."
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1549576490-b0b4831ef60a?auto=format&fit=crop&w=300&q=60"
+                />
+                <div>
+                  <b>Tadasana</b><br /><span class="muted">Posture</span>
+                </div>
+              </div>
+              <div
+                class="pose"
+                data-name="Vrikshasana"
+                data-desc="Tree pose — leg strength and focus."
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1554344727-7f9e2f9e0b5b?auto=format&fit=crop&w=300&q=60"
+                />
+                <div>
+                  <b>Vrikshasana</b><br /><span class="muted">Balance</span>
+                </div>
+              </div>
+              <div
+                class="pose"
+                data-name="Bhujangasana"
+                data-desc="Cobra pose — opens chest and relieves mild backache."
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1543168256-4188115766f1?auto=format&fit=crop&w=300&q=60"
+                />
+                <div>
+                  <b>Bhujangasana</b><br /><span class="muted"
+                    >Back Health</span
+                  >
+                </div>
+              </div>
+              <div
+                class="pose"
+                data-name="Savasana"
+                data-desc="Corpse pose — relaxation and stress reduction."
+              >
+                <img
+                  src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=300&q=60"
+                />
+                <div>
+                  <b>Savasana</b><br /><span class="muted">Relaxation</span>
+                </div>
+              </div>
+            </div>
+            <div id="poseDetails" class="muted">
+              Click any pose to see details here.
+            </div>
+          </article>
+
+          <article id="workout" class="card">
+            <h2>🏃 Daily Workout Tracker</h2>
+            <div class="workout-input">
+              <input id="workoutInput" placeholder="e.g. 15 squats" />
+              <button id="addWorkout" class="btn btn-primary">Add</button>
+            </div>
+            <ul id="workoutList" class="workout-list"></ul>
+          </article>
+
+          <article id="diet" class="card">
+            <h2>🥗 Indian Diet Tips</h2>
+            <ul>
+              <li>Start with warm water and soaked nuts in the morning.</li>
+              <li>Include dal/legumes and a vegetable with each meal.</li>
+              <li>Prefer millets and whole grains; reduce refined sugar.</li>
+              <li>Include curd or buttermilk for gut health.</li>
+            </ul>
+          </article>
+
+          <article id="psychology" class="card">
+            <h2>🧠 Psychological Wellness</h2>
+            <p>
+              Track your mood, practice affirmations, and use breathing sessions
+              to improve mental health.
+            </p>
+
+            <div>
+              <label>Mood today:</label>
+              <div class="row">
+                <select id="moodSelect">
+                  <option value="Happy">😊 Happy</option>
+                  <option value="Calm">😌 Calm</option>
+                  <option value="Stressed">😣 Stressed</option>
+                  <option value="Tired">🥱 Tired</option>
+                  <option value="Motivated">💪 Motivated</option>
+                </select>
+                <button id="saveMood" class="btn">Save</button>
+              </div>
+              <div id="moodDisplay" class="muted"></div>
+            </div>
+
+            <div class="affirmation-box">
+              <h3>Daily Affirmation</h3>
+              <div id="affirmationBox" class="affirmation">
+                I am calm, centered, and capable.
+              </div>
+              <button id="newAffirm" class="btn">New Affirmation</button>
+            </div>
+
+            <div class="mood-history-container">
+              <h3>Mood History (last 7)</h3>
+              <div id="moodHistory" class="mood-history"></div>
+            </div>
+          </article>
+        </section>
+
+        <aside>
+          <div class="card widget">
+            <h2>⚖️ BMI Calculator</h2>
+            <div class="row">
+              <input id="height" type="number" placeholder="Height (cm)" />
+              <input id="weight" type="number" placeholder="Weight (kg)" />
+            </div>
+            <button id="calcBMI" class="btn btn-primary">Calculate</button>
+            <div id="bmiResult"></div>
+          </div>
+
+          <div class="card widget">
+            <h2>🌬️ Mindful Breathing</h2>
+            <div class="breath-wrap">
+              <div id="breathCircle" class="breath-circle">
+                <div id="breathLabel">Ready</div>
+              </div>
+              <button id="startBreath" class="btn btn-primary">Start</button>
+              <button id="stopBreath" class="btn">Stop</button>
+            </div>
+          </div>
+
+          <div class="card widget">
+            <h2>✅ Daily Checklist</h2>
+            <div class="checklist" id="checklist">
+              <label
+                ><input type="checkbox" data-key="water" /> Drink 2L
+                water</label
+              >
+              <label
+                ><input type="checkbox" data-key="yoga" /> 15 min yoga</label
+              >
+              <label
+                ><input type="checkbox" data-key="walk" /> 30 min walk</label
+              >
+              <label
+                ><input type="checkbox" data-key="sleep" /> 7-8 hrs sleep</label
+              >
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <footer>
+      © 2025 FitBharat • Indian Health, Wellness & Psychology (IHWP) — Prepared
+      by [Your Name]
+    </footer>
+
+    <!-- Back to Top -->
+    <button id="backToTop" title="Go to top">⬆</button>
+
+    <script src="script.js"></script>
+  </body>
+</html>

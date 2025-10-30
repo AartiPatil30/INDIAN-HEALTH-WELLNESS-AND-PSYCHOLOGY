@@ -1,0 +1,313 @@
+/* ========== FitBharat — style.css ========== */
+
+:root {
+  --accent: #0f766e;
+  --accent-2: #0ea5e9;
+  --muted: #6b7280;
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --radius: 12px;
+  --maxw: 1100px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  margin: 0;
+  background: linear-gradient(180deg, #f0fdfa 0%, #e0f2fe 100%);
+  color: #07203a;
+}
+
+/* Navbar */
+header {
+  background: linear-gradient(90deg, rgba(15, 118, 110, 0.1), rgba(14, 165, 233, 0.05));
+  padding: 10px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar {
+  max-width: var(--maxw);
+  margin: auto;
+  padding: 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-weight: 800;
+  color: var(--accent);
+  font-size: 22px;
+}
+
+/* Nav links */
+nav {
+  display: flex;
+  gap: 16px;
+}
+
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+nav a:hover {
+  color: var(--accent);
+}
+
+/* Mobile nav */
+.menu-btn {
+  display: none;
+  font-size: 22px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  nav {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    background: var(--card);
+    position: absolute;
+    top: 60px;
+    right: 18px;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  nav.show {
+    display: flex;
+  }
+
+  .menu-btn {
+    display: block;
+  }
+}
+
+/* Layout */
+.container {
+  max-width: var(--maxw);
+  margin: 20px auto;
+  padding: 0 18px;
+}
+
+.hero {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.06);
+  text-align: center;
+}
+
+.hero h1 {
+  margin-bottom: 6px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 20px;
+  margin-top: 18px;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.04);
+  margin-bottom: 16px;
+}
+
+/* Buttons */
+.btn, .btn-primary {
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 6px 10px;
+  font-weight: 600;
+  border: 1px solid var(--accent);
+}
+
+.btn {
+  background: transparent;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+  border: none;
+}
+
+/* Inputs */
+input, select {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  width: 100%;
+}
+
+/* Yoga Poses */
+.poses {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.pose {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.pose img {
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* Workout list */
+.workout-input {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.workout-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.workout-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 6px;
+}
+
+/* Breathing */
+.breath-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.breath-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 6px solid rgba(15, 118, 110, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 1s ease;
+}
+
+#breathLabel {
+  font-weight: bold;
+}
+
+/* Affirmation */
+.affirmation {
+  background: #dcfce7;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 10px 0;
+  font-style: italic;
+  color: #065f46;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(2, 6, 23, 0.4);
+  z-index: 999;
+}
+
+.modal-card {
+  background: var(--card);
+  padding: 18px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 400px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.modal-btns {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Mood history */
+.mood-history {
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 6px;
+}
+
+.mood-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 18px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* Back to Top */
+#backToTop {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  cursor: pointer;
+  display: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#backToTop:hover {
+  background: var(--accent-2);
+}

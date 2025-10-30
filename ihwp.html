@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>IHWP — Indian Health, Wellness and Psychology</title>
+
+    <!-- Fonts & icons -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Lora:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --accent1: #2e8b57;
+        --accent2: #60c099;
+        --muted: #6b7a78;
+        --card: #ffffff;
+        --bg: #f3fbf8;
+        --glass: rgba(255, 255, 255, 0.8);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto,
+          Arial;
+        background: linear-gradient(180deg, #eefaf6 0%, #f7fff9 100%);
+        color: #123;
+        -webkit-font-smoothing: antialiased;
+      }
+      header {
+        background: linear-gradient(90deg, var(--accent1), var(--accent2));
+        color: white;
+        padding: 18px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        box-shadow: 0 6px 20px rgba(16, 50, 40, 0.12);
+      }
+      header .brand {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .brand h1 {
+        margin: 0;
+        font-family: "Lora", serif;
+        font-size: 20px;
+        letter-spacing: 0.6px;
+      }
+      header .actions {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      header button,
+      nav button {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      header button:hover {
+        transform: translateY(-1px);
+      }
+
+      nav {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 10px;
+        background: transparent;
+      }
+
+      .wrap {
+        max-width: 1050px;
+        margin: 28px auto;
+        padding: 18px;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 1fr 360px;
+        gap: 18px;
+        align-items: start;
+      }
+      .card {
+        background: var(--card);
+        padding: 18px;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(12, 36, 34, 0.05);
+      }
+      .panel {
+        border-radius: 12px;
+        padding: 14px;
+        background: linear-gradient(180deg, #ffffff, #fbfffc);
+        box-shadow: 0 4px 14px rgba(17, 50, 45, 0.04);
+      }
+
+      .muted {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      /* form elements */
+      input[type="text"],
+      input[type="email"],
+      input[type="password"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 8px;
+        border: 1px solid #e6efed;
+        font-size: 14px;
+        margin-top: 8px;
+        background: #fbfffe;
+      }
+      label {
+        font-weight: 600;
+        display: block;
+        margin-top: 12px;
+        color: #0f3d35;
+      }
+
+      .btn {
+        background: var(--accent1);
+        color: white;
+        border: none;
+        padding: 10px 14px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .btn.alt {
+        background: transparent;
+        color: var(--accent1);
+        border: 1px solid var(--accent1);
+      }
+      .btn.danger {
+        background: #e45b5b;
+      }
+
+      .flex {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .center {
+        text-align: center;
+      }
+
+      /* test UI */
+      .qcard {
+        background: #f7fffb;
+        border-radius: 10px;
+        padding: 12px;
+        margin-bottom: 10px;
+        border-left: 4px solid var(--accent2);
+      }
+      .option {
+        display: block;
+        background: white;
+        padding: 10px;
+        border-radius: 8px;
+        margin-top: 8px;
+        border: 1px solid #edf8f4;
+        cursor: pointer;
+        transition: 0.12s;
+      }
+      .option:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 18px rgba(12, 50, 40, 0.06);
+      }
+      .option input {
+        margin-right: 8px;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 6px 10px;
+        background: #eefff8;
+        color: var(--accent1);
+        border-radius: 999px;
+        font-weight: 700;
+        margin-right: 6px;
+      }
+
+      /* results tabs */
+      .tabs {
+        display: flex;
+        gap: 6px;
+        margin-top: 12px;
+      }
+      .tab {
+        padding: 8px 12px;
+        border-radius: 8px;
+        background: #fbfffb;
+        cursor: pointer;
+        border: 1px solid #e6f6ee;
+        font-weight: 700;
+      }
+      .tab.active {
+        background: linear-gradient(90deg, var(--accent1), var(--accent2));
+        color: white;
+        box-shadow: 0 6px 18px rgba(12, 40, 36, 0.08);
+      }
+
+      /* small layout */
+      aside .card {
+        position: sticky;
+        top: 20px;
+      }
+
+      /* history list */
+      .history-item {
+        padding: 10px;
+        border-radius: 8px;
+        background: #fcfffd;
+        margin-bottom: 8px;
+        border: 1px solid #eef7f1;
+      }
+      .small {
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      footer {
+        text-align: center;
+        color: var(--muted);
+        padding: 20px 0;
+        margin-top: 18px;
+      }
+
+      @media (max-width: 980px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        aside .card {
+          position: static;
+        }
+        header {
+          flex-direction: column;
+          gap: 12px;
+          align-items: flex-start;
+          padding: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <i
+          class="fa-solid fa-seedling"
+          style="font-size: 22px; color: #fff"
+        ></i>
+        <h1>IHWP — Indian Health, Wellness and Psychology</h1>
+      </div>
+
+      <div class="actions">
+        <div id="welcomeText" class="muted" style="margin-right: 8px">
+          Welcome, Guest
+        </div>
+        <button id="navHome" class="alt">Home</button>
+        <button id="navProfile" class="alt">Profile</button>
+        <button id="navPrakriti" class="alt">Prakriti Test</button>
+        <button id="navTests" class="alt">Tests</button>
+        <button id="logoutBtn" style="display: none" class="btn danger">
+          Logout
+        </button>
+      </div>
+    </header>
+
+    <div class="wrap">
+      <div class="layout">
+        <!-- MAIN column -->
+        <main>
+          <!-- Home / Intro -->
+          <section id="homeSection" class="card panel" style="display: block">
+            <div class="flex" style="justify-content: space-between">
+              <div>
+                <h2 style="margin: 0">Welcome to IHWP</h2>
+                <div class="muted">
+                  Personalized physical, mental & Ayurvedic (Prakriti)
+                  assessments — created for college project demo
+                </div>
+              </div>
+              <div class="center">
+                <span class="badge">College Project</span>
+                <div class="small" style="margin-top: 6px">
+                  Single-file app — no backend
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: 18px">
+              <div class="flex">
+                <div style="flex: 1" class="card">
+                  <h4 style="margin: 0">Get Started</h4>
+                  <p class="small">
+                    Please register or login to take tests and view personalized
+                    plans.
+                  </p>
+                  <div style="display: flex; gap: 8px; margin-top: 10px">
+                    <button
+                      class="btn"
+                      onclick="showSection('authSection','login')"
+                    >
+                      Login
+                    </button>
+                    <button
+                      class="btn alt"
+                      onclick="showSection('authSection','register')"
+                    >
+                      Register
+                    </button>
+                  </div>
+                </div>
+
+                <div style="width: 260px" class="card center">
+                  <h4 style="margin: 6px 0">Today's Tip</h4>
+                  <p class="small">
+                    Start the day with 5–10 minutes of mindful breathing — it
+                    improves focus and reduces stress.
+                  </p>
+                  <i
+                    class="fa-regular fa-heart"
+                    style="font-size: 28px; color: var(--accent1)"
+                  ></i>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- AUTH: login/register -->
+          <section id="authSection" class="card" style="display: none">
+            <div style="display: flex; gap: 14px; align-items: flex-start">
+              <div style="flex: 1">
+                <h3 id="authTitle">Login</h3>
+
+                <div id="loginForm">
+                  <label>Email</label>
+                  <input
+                    id="loginEmail"
+                    type="email"
+                    placeholder="you@example.com"
+                  />
+                  <label>Password</label>
+                  <input
+                    id="loginPass"
+                    type="password"
+                    placeholder="min 6 characters"
+                  />
+                  <div style="display: flex; gap: 8px; margin-top: 8px">
+                    <button class="btn" onclick="doLogin()">Login</button>
+                    <button class="btn alt" onclick="switchAuth('register')">
+                      Create account
+                    </button>
+                  </div>
+                  <div
+                    id="loginHelp"
+                    class="small muted"
+                    style="margin-top: 10px"
+                  >
+                    Demo: register any email/password — data saved locally.
+                  </div>
+                </div>
+
+                <div id="registerForm" style="display: none">
+                  <label>Full name</label>
+                  <input
+                    id="regName"
+                    type="text"
+                    placeholder="Your full name"
+                  />
+                  <label>Email</label>
+                  <input
+                    id="regEmail"
+                    type="email"
+                    placeholder="you@example.com"
+                  />
+                  <label>Password</label>
+                  <input
+                    id="regPass"
+                    type="password"
+                    placeholder="min 6 characters"
+                  />
+                  <div style="display: flex; gap: 8px; margin-top: 8px">
+                    <button class="btn" onclick="doRegister()">Register</button>
+                    <button class="btn alt" onclick="switchAuth('login')">
+                      Back to login
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div style="width: 260px">
+                <div class="panel">
+                  <h4 style="margin: 0">Why register?</h4>
+                  <ul class="small muted">
+                    <li>Save test history (daily/weekly/monthly)</li>
+                    <li>Get personalized diet & yoga plans</li>
+                    <li>View aggregated health trends</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- TESTS: choose & take -->
+          <section id="testsSection" class="card" style="display: none">
+            <h3>Take Assessments</h3>
+            <p class="small muted">
+              Choose assessment — you must be logged in.
+            </p>
+
+            <div
+              style="display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap"
+            >
+              <button class="btn" onclick="startTest('physical')">
+                <i class="fa-solid fa-dumbbell"></i> Physical
+              </button>
+              <button class="btn" onclick="startTest('mental')">
+                <i class="fa-solid fa-brain"></i> Mental
+              </button>
+              <button class="btn" onclick="startTest('prakriti')">
+                <i class="fa-solid fa-leaf"></i> Prakriti (Dosha)
+              </button>
+              <button class="btn alt" onclick="showSection('historySection')">
+                <i class="fa-solid fa-clock-rotate-left"></i> View History
+              </button>
+            </div>
+
+            <div id="testArea" style="margin-top: 16px; display: none"></div>
+          </section>
+
+          <!-- RESULTS / plan display -->
+          <section id="resultsSection" class="card" style="display: none">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <h3>Personalized Plan & Reports</h3>
+              <div>
+                <div class="tabs" id="reportTabs">
+                  <div class="tab active" onclick="switchReportTab('daily')">
+                    Daily
+                  </div>
+                  <div class="tab" onclick="switchReportTab('weekly')">
+                    Weekly
+                  </div>
+                  <div class="tab" onclick="switchReportTab('monthly')">
+                    Monthly
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="reportArea" style="margin-top: 14px">
+              <div id="reportSummary" class="panel">
+                <h4>Summary</h4>
+                <div id="summaryText" class="muted">
+                  Complete an assessment to see your personalized plan here.
+                </div>
+              </div>
+
+              <div
+                style="
+                  display: flex;
+                  gap: 12px;
+                  margin-top: 12px;
+                  flex-wrap: wrap;
+                "
+              >
+                <div style="flex: 1; min-width: 260px" class="panel">
+                  <h5>Diet Chart</h5>
+                  <div id="dietChart" class="small">No data yet.</div>
+                </div>
+
+                <div style="flex: 1; min-width: 260px" class="panel">
+                  <h5>Yoga & Meditation</h5>
+                  <div id="yogaChart" class="small">No data yet.</div>
+                </div>
+
+                <div style="flex: 1; min-width: 260px" class="panel">
+                  <h5>Daily Routine</h5>
+                  <div id="routineChart" class="small">No data yet.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- HISTORY / Past results -->
+          <section id="historySection" class="card" style="display: none">
+            <h3>Test History</h3>
+            <div id="historyList" style="margin-top: 12px"></div>
+          </section>
+        </main>
+
+        <!-- RIGHT column -->
+        <aside>
+          <div class="card">
+            <div style="display: flex; gap: 12px; align-items: center">
+              <div
+                class="avatar"
+                id="avatarDisplay"
+                style="
+                  width: 64px;
+                  height: 64px;
+                  border-radius: 10px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  background: #f0fffb;
+                  color: var(--accent1);
+                  font-weight: 700;
+                  font-size: 22px;
+                "
+              >
+                U
+              </div>
+              <div>
+                <div id="displayName" style="font-weight: 800">Guest</div>
+                <div class="small muted" id="displayEmail">Not logged in</div>
+              </div>
+            </div>
+
+            <div style="margin-top: 12px">
+              <div class="small muted">Quick actions</div>
+              <div
+                style="
+                  display: flex;
+                  gap: 8px;
+                  margin-top: 8px;
+                  flex-wrap: wrap;
+                "
+              >
+                <button class="btn alt" onclick="showSection('testsSection')">
+                  Take Test
+                </button>
+                <button class="btn alt" onclick="protectedGo('resultsSection')">
+                  View Plan
+                </button>
+                <button class="btn alt" onclick="protectedGo('historySection')">
+                  History
+                </button>
+              </div>
+            </div>
+
+            <div style="margin-top: 14px">
+              <h4 style="margin: 0">Last Result</h4>
+              <div id="lastResult" class="small muted">—</div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top: 12px">
+            <h4 style="margin: 0">About IHWP</h4>
+            <p class="small muted" style="margin-top: 8px">
+              This is a demo single-file wellness platform for college projects.
+              It stores data locally in your browser (localStorage).
+            </p>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <footer>© 2025 IHWP — Designed for College Presentation</footer>
+
+    <script>
+      /* ====== Data structures in localStorage ======
+localStorage key 'ihwp_users' -> object mapping email => { name, email, pass, history: [ { ts, type, answers, physicalScore, mentalScore, dosha } ] }
+localStorage key 'ihwp_current' -> current logged-in email
+*/
+
+      const STORAGE_USERS = "ihwp_users";
+      const STORAGE_CURRENT = "ihwp_current";
+
+      /* ---------- Helpers ---------- */
+      function readUsers() {
+        return JSON.parse(localStorage.getItem(STORAGE_USERS) || "{}");
+      }
+      function saveUsers(u) {
+        localStorage.setItem(STORAGE_USERS, JSON.stringify(u));
+      }
+      function setCurrent(email) {
+        localStorage.setItem(STORAGE_CURRENT, email || "");
+        updateUIForAuth();
+      }
+      function getCurrent() {
+        return localStorage.getItem(STORAGE_CURRENT) || "";
+      }
+      function now() {
+        return Date.now();
+      }
+      function fmtDate(ts) {
+        const d = new Date(ts);
+        return d.toLocaleString();
+      }
+
+      /* ---------- Auth UI ---------- */
+      function switchAuth(mode) {
+        document.getElementById("authTitle").innerText =
+          mode === "login" ? "Login" : "Create account";
+        document.getElementById("loginForm").style.display =
+          mode === "login" ? "block" : "none";
+        document.getElementById("registerForm").style.display =
+          mode === "login" ? "none" : "block";
+        showSection("authSection");
+      }
+
+      function doRegister() {
+        const name = (document.getElementById("regName").value || "").trim();
+        const email = (document.getElementById("regEmail").value || "")
+          .trim()
+          .toLowerCase();
+        const pass = document.getElementById("regPass").value || "";
+        if (!name || !email || pass.length < 6) {
+          alert(
+            "Please enter a name, a valid email and password (min 6 chars)."
+          );
+          return;
+        }
+        const users = readUsers();
+        if (users[email]) {
+          alert("User already exists, please login.");
+          switchAuth("login");
+          return;
+        }
+        users[email] = { name, email, pass, history: [] };
+        saveUsers(users);
+        alert("Registration successful. Please login.");
+        switchAuth("login");
+        document.getElementById("regName").value = "";
+        document.getElementById("regEmail").value = "";
+        document.getElementById("regPass").value = "";
+      }
+
+      function doLogin() {
+        const email = (document.getElementById("loginEmail").value || "")
+          .trim()
+          .toLowerCase();
+        const pass = document.getElementById("loginPass").value || "";
+        const users = readUsers();
+        if (!users[email] || users[email].pass !== pass) {
+          alert("Invalid credentials.");
+          return;
+        }
+        setCurrent(email);
+        document.getElementById("loginEmail").value = "";
+        document.getElementById("loginPass").value = "";
+        showSection("homeSection");
+        updateProfilePanel();
+        alert("Login successful! Welcome, " + users[email].name);
+      }
+
+      function doLogout() {
+        setCurrent("");
+        alert("Logged out.");
+        showSection("homeSection");
+      }
+
+      /* ---------- UI navigation & auth protection ---------- */
+      function showSection(sectionId, sub = null) {
+        // hide all main sections
+        const sectionIDs = [
+          "homeSection",
+          "authSection",
+          "testsSection",
+          "resultsSection",
+          "historySection",
+        ];
+        sectionIDs.forEach(
+          (s) => (document.getElementById(s).style.display = "none")
+        );
+        // show requested
+        const el = document.getElementById(sectionId);
+        if (el) el.style.display = "block";
+        // handle auth subviews
+        if (sectionId === "authSection" && sub) switchAuth(sub);
+      }
+
+      function protectedGo(sectionId) {
+        const cur = getCurrent();
+        if (!cur) {
+          alert("Please login to access this feature.");
+          switchAuth("login");
+          return;
+        }
+        showSection(sectionId);
+        if (sectionId === "resultsSection") renderReports("daily");
+        if (sectionId === "historySection") renderHistory();
+        if (sectionId === "homeSection") updateProfilePanel();
+      }
+
+      function updateUIForAuth() {
+        const cur = getCurrent();
+        const welcome = document.getElementById("welcomeText");
+        const logoutBtn = document.getElementById("logoutBtn");
+        const displayName = document.getElementById("displayName");
+        const displayEmail = document.getElementById("displayEmail");
+        const avatar = document.getElementById("avatarDisplay");
+        if (cur) {
+          const users = readUsers();
+          const u = users[cur];
+          welcome.innerText = "Hello, " + (u?.name || "User");
+          logoutBtn.style.display = "inline-block";
+          displayName.innerText = u?.name || "User";
+          displayEmail.innerText = u?.email || "";
+          avatar.innerText = u?.name ? u.name.charAt(0).toUpperCase() : "U";
+          document.getElementById("navPrakriti").onclick = () =>
+            protectedGo("testsSection");
+          document.getElementById("navTests").onclick = () =>
+            protectedGo("testsSection");
+          document.getElementById("navProfile").onclick = () =>
+            protectedGo("homeSection");
+        } else {
+          welcome.innerText = "Welcome, Guest";
+          logoutBtn.style.display = "none";
+          displayName.innerText = "Guest";
+          displayEmail.innerText = "Not logged in";
+          avatar.innerText = "U";
+          document.getElementById("navPrakriti").onclick = () => {
+            alert("Please login first.");
+            switchAuth("login");
+          };
+          document.getElementById("navTests").onclick = () => {
+            alert("Please login first.");
+            switchAuth("login");
+          };
+          document.getElementById("navProfile").onclick = () =>
+            showSection("homeSection");
+        }
+      }
+      document
+        .getElementById("logoutBtn")
+        .addEventListener("click", function () {
+          doLogout();
+          setCurrent("");
+          updateUIForAuth();
+        });
+
+      /* initialize UI state */
+      updateUIForAuth();
+      showSection("homeSection");
+      document
+        .getElementById("navHome")
+        .addEventListener("click", () => showSection("homeSection"));
+
+      /* ---------- Test questions (sentence-style options) ---------- */
+      /* For physical & mental we will use 5 questions each (you can extend) */
+      /* Prakriti questions map options to V/P/K */
+
+      const QUESTIONS = {
+        physical: [
+          {
+            id: "p1",
+            text: "How often do you exercise?",
+            options: [
+              { k: "daily", text: "Every day (30+ mins)" },
+              { k: "several", text: "Few times a week" },
+              { k: "occasionally", text: "Occasionally (once a week)" },
+              { k: "rarely", text: "Rarely or never" },
+            ],
+          },
+          {
+            id: "p2",
+            text: "How is your sleep quality?",
+            options: [
+              { k: "deep", text: "Deep & restful (7-8 hrs)" },
+              { k: "okay", text: "Fair (6 hrs)" },
+              { k: "light", text: "Light sleep (frequent waking)" },
+              { k: "disturbed", text: "Irregular / disturbed sleep" },
+            ],
+          },
+          {
+            id: "p3",
+            text: "How would you describe your daily energy?",
+            options: [
+              { k: "high", text: "Always energetic" },
+              { k: "good", text: "Usually fine" },
+              { k: "low", text: "Often tired" },
+              { k: "verylow", text: "Lethargic most days" },
+            ],
+          },
+          {
+            id: "p4",
+            text: "How balanced is your everyday diet?",
+            options: [
+              { k: "balanced", text: "Home-cooked & balanced daily" },
+              { k: "mixed", text: "Often balanced but sometimes junk food" },
+              { k: "poor", text: "Mostly processed / outside food" },
+              { k: "skip", text: "Skip meals often" },
+            ],
+          },
+          {
+            id: "p5",
+            text: "How consistent is your physical routine?",
+            options: [
+              { k: "consistent", text: "I follow a routine consistently" },
+              { k: "some", text: "Some routine most days" },
+              { k: "irregular", text: "Irregular routine" },
+              { k: "none", text: "No routine at all" },
+            ],
+          },
+        ],
+        mental: [
+          {
+            id: "m1",
+            text: "How often do you feel stressed?",
+            options: [
+              { k: "rare", text: "Rarely or never" },
+              { k: "sometimes", text: "Sometimes" },
+              { k: "often", text: "Often" },
+              { k: "always", text: "Almost always" },
+            ],
+          },
+          {
+            id: "m2",
+            text: "How would you rate your focus on tasks?",
+            options: [
+              { k: "excellent", text: "Excellent — I rarely get distracted" },
+              { k: "good", text: "Mostly focused with small distractions" },
+              { k: "weak", text: "Easily distracted often" },
+              { k: "poor", text: "Very hard to focus" },
+            ],
+          },
+          {
+            id: "m3",
+            text: "How calm are your emotions overall?",
+            options: [
+              { k: "calm", text: "Generally calm & stable" },
+              { k: "balanced", text: "Mostly balanced" },
+              { k: "moody", text: "Often moody" },
+              { k: "turbulent", text: "Frequent emotional ups & downs" },
+            ],
+          },
+          {
+            id: "m4",
+            text: "How often do you practice relaxation/mindfulness?",
+            options: [
+              { k: "daily", text: "Daily meditation / breathing" },
+              { k: "weekly", text: "Few times a week" },
+              { k: "occasional", text: "Occasionally" },
+              { k: "never", text: "Never" },
+            ],
+          },
+          {
+            id: "m5",
+            text: "How do you sleep with regard to mental calmness?",
+            options: [
+              { k: "peace", text: "Sleep peacefully without worry" },
+              { k: "some", text: "Some nights disturbed" },
+              { k: "trouble", text: "Often have trouble sleeping" },
+              { k: "verytrouble", text: "Insomnia / frequent waking" },
+            ],
+          },
+        ],
+        prakriti: [
+          // each option increases score for one of V/P/K
+          {
+            id: "d1",
+            text: "Your body type is:",
+            options: [
+              {
+                k: "v",
+                text: "Slim & light — joints & bones noticeable (Vata)",
+              },
+              { k: "p", text: "Medium build, warm body (Pitta)" },
+              { k: "k", text: "Strong/solid build, heavier set (Kapha)" },
+              { k: "mix", text: "Hard to categorize or mixed traits" },
+            ],
+          },
+          {
+            id: "d2",
+            text: "Your digestion is:",
+            options: [
+              { k: "v", text: "Irregular, variable appetite (Vata)" },
+              { k: "p", text: "Strong appetite, quick digestion (Pitta)" },
+              {
+                k: "k",
+                text: "Slow digestion, tendency to feel heavy (Kapha)",
+              },
+              { k: "mix", text: "Varies by situation" },
+            ],
+          },
+          {
+            id: "d3",
+            text: "Your skin & complexion is:",
+            options: [
+              { k: "v", text: "Dry, rough, cool (Vata)" },
+              { k: "p", text: "Warm, often reddish (Pitta)" },
+              { k: "k", text: "Smooth, moist, cool (Kapha)" },
+              { k: "mix", text: "Combination / normal" },
+            ],
+          },
+          {
+            id: "d4",
+            text: "Your temperament is:",
+            options: [
+              { k: "v", text: "Quick, creative, changeable (Vata)" },
+              { k: "p", text: "Ambitious, sharp, decisive (Pitta)" },
+              { k: "k", text: "Calm, steady, forgiving (Kapha)" },
+              { k: "mix", text: "Depends on situation" },
+            ],
+          },
+          {
+            id: "d5",
+            text: "Your sleep patterns are:",
+            options: [
+              { k: "v", text: "Light sleeper, wakes often (Vata)" },
+              {
+                k: "p",
+                text: "Moderate sleep; can be irritable if hungry (Pitta)",
+              },
+              { k: "k", text: "Deep and long sleep (Kapha)" },
+              { k: "mix", text: "Varies / mixed" },
+            ],
+          },
+        ],
+      };
+
+      /* ---------- Start a test ---------- */
+      function startTest(type) {
+        const cur = getCurrent();
+        if (!cur) {
+          alert("Please login to take tests.");
+          switchAuth("login");
+          return;
+        }
+
+        const testArea = document.getElementById("testArea");
+        testArea.style.display = "block";
+        testArea.innerHTML = "";
+        const title = document.createElement("h4");
+        title.innerText =
+          type === "physical"
+            ? "Physical Health Assessment"
+            : type === "mental"
+            ? "Mental Health Assessment"
+            : "Prakriti (Dosha) Assessment";
+        testArea.appendChild(title);
+
+        const qs = QUESTIONS[type];
+        const form = document.createElement("div");
+
+        qs.forEach((q) => {
+          const qdiv = document.createElement("div");
+          qdiv.className = "qcard";
+          const qtitle = document.createElement("div");
+          qtitle.innerHTML = `<strong>${q.text}</strong>`;
+          qdiv.appendChild(qtitle);
+
+          q.options.forEach((opt, idx) => {
+            const optDiv = document.createElement("label");
+            optDiv.className = "option";
+            const input = document.createElement("input");
+            input.type = "radio";
+            input.name = q.id;
+            input.value = opt.k;
+            optDiv.appendChild(input);
+            const txt = document.createElement("span");
+            txt.innerText = opt.text;
+            optDiv.appendChild(txt);
+            qdiv.appendChild(optDiv);
+          });
+
+          form.appendChild(qdiv);
+        });
+
+        const actionDiv = document.createElement("div");
+        actionDiv.style.marginTop = "10px";
+        const submitBtn = document.createElement("button");
+        submitBtn.className = "btn";
+        submitBtn.innerText = "Submit Assessment";
+        submitBtn.onclick = () => submitTest(type, qs);
+        actionDiv.appendChild(submitBtn);
+
+        const cancelBtn = document.createElement("button");
+        cancelBtn.className = "btn alt";
+        cancelBtn.style.marginLeft = "8px";
+        cancelBtn.innerText = "Cancel";
+        cancelBtn.onclick = () => {
+          testArea.style.display = "none";
+          testArea.innerHTML = "";
+        };
+        actionDiv.appendChild(cancelBtn);
+
+        form.appendChild(actionDiv);
+        testArea.appendChild(form);
+
+        // scroll into view
+        testArea.scrollIntoView({ behavior: "smooth" });
+      }
+
+      /* ---------- Compute scores and store submission ---------- */
+      /* We'll map textual choices to scores internally:
+   For physical/mental: options order roughly maps to high->low (4..1)
+   For prakriti: count v/p/k votes
+*/
+
+      function submitTest(type, questions) {
+        const cur = getCurrent();
+        if (!cur) {
+          alert("Please login first.");
+          return;
+        }
+        const users = readUsers();
+        const user = users[cur];
+        if (!user) {
+          alert("User data missing.");
+          return;
+        }
+
+        // collect answers
+        const answers = {};
+        let allAnswered = true;
+        questions.forEach((q) => {
+          const radios = document.getElementsByName(q.id);
+          let val = null;
+          for (let r of radios)
+            if (r.checked) {
+              val = r.value;
+              break;
+            }
+          if (!val) allAnswered = false;
+          answers[q.id] = val;
+        });
+        if (!allAnswered) {
+          alert("Please answer all questions.");
+          return;
+        }
+
+        const timestamp = now();
+        const record = { ts: timestamp, type, answers };
+
+        // compute physical and mental scores
+        if (type === "physical") {
+          // interpret options in mapping to scores 4..1 (best -> worst)
+          // define weight map by key (based on QUESTIONS ordering)
+          const map = {
+            daily: 4,
+            several: 3,
+            occasionally: 2,
+            rarely: 1,
+            deep: 4,
+            okay: 3,
+            light: 2,
+            disturbed: 1,
+            high: 4,
+            good: 3,
+            low: 2,
+            verylow: 1,
+            balanced: 4,
+            mixed: 3,
+            poor: 2,
+            skip: 1,
+            consistent: 4,
+            some: 3,
+            irregular: 2,
+            none: 1,
+          };
+          let sum = 0;
+          let count = 0;
+          for (const k in answers) {
+            const v = answers[k];
+            const s = map[v] || 2; // default
+            sum += s;
+            count++;
+          }
+          const physicalScore = Math.round((sum / (4 * count)) * 100); // percent
+          record.physicalScore = physicalScore;
+        } else if (type === "mental") {
+          const map = {
+            rare: 4,
+            sometimes: 3,
+            often: 2,
+            always: 1,
+            excellent: 4,
+            good: 3,
+            weak: 2,
+            poor: 1,
+            calm: 4,
+            balanced: 3,
+            moody: 2,
+            turbulent: 1,
+            daily: 4,
+            weekly: 3,
+            occasional: 2,
+            never: 1,
+            peace: 4,
+            some: 3,
+            trouble: 2,
+            verytrouble: 1,
+          };
+          let sum = 0;
+          let count = 0;
+          for (const k in answers) {
+            const v = answers[k];
+            const s = map[v] || 2;
+            sum += s;
+            count++;
+          }
+          const mentalScore = Math.round((sum / (4 * count)) * 100);
+          record.mentalScore = mentalScore;
+        } else if (type === "prakriti") {
+          // count V/P/K votes
+          const tally = { v: 0, p: 0, k: 0 };
+          for (const k in answers) {
+            const v = answers[k];
+            if (v === "v") tally.v++;
+            else if (v === "p") tally.p++;
+            else if (v === "k") tally.k++;
+            // 'mix' adds small to all
+            else if (v === "mix") {
+              tally.v++;
+              tally.p++;
+              tally.k++;
+            }
+          }
+          // determine dominant or combo
+          const arr = [
+            { k: "Vata", n: tally.v },
+            { k: "Pitta", n: tally.p },
+            { k: "Kapha", n: tally.k },
+          ];
+          arr.sort((a, b) => b.n - a.n);
+          const top = arr[0],
+            second = arr[1];
+          let dosha = top.k;
+          if (top.n === second.n) dosha = top.k + "-" + second.k; // combined
+          record.dosha = dosha;
+          record.tally = tally;
+        }
+
+        // store in user history
+        if (!user.history) user.history = [];
+        user.history.push(record);
+        users[cur] = user;
+        saveUsers(users);
+
+        // show result + generate plan
+        showPlanForRecord(record, user);
+        // update right panel
+        updateLastResult();
+        // hide test area
+        document.getElementById("testArea").style.display = "none";
+        alert("Your assessment has been saved.");
+      }
+
+      /* ---------- Plan generation logic ---------- */
+      function showPlanForRecord(record, user) {
+        // present plan in Results section and show Reports -> daily
+        showSection("resultsSection");
+        // compute aggregated daily/weekly/monthly after adding record
+        renderReports("daily");
+      }
+
+      /* Build diet/yoga/routine suggestions based on latest data */
+      function buildPlanFromAggregated(agg) {
+        // agg: { physicalAvgPercent, mentalAvgPercent, dosha }...
+        const phys = agg.physicalAvgPercent || 50;
+        const ment = agg.mentalAvgPercent || 50;
+        const dosha = agg.dosha || "";
+
+        // Diet
+        let diet = [];
+        if (phys >= 75)
+          diet.push(
+            "Maintain high-quality proteins: lentils, eggs/paneer, lean meats or soy."
+          );
+        else if (phys >= 50)
+          diet.push(
+            "Balanced meals: millets/brown rice, vegetables, pulses and regular protein."
+          );
+        else
+          diet.push(
+            "Increase protein & energy: milk, nuts, legumes; avoid skipping meals."
+          );
+
+        if (dosha.includes("Vata"))
+          diet.push(
+            "Vata tip: warm, cooked meals; include healthy oils; avoid cold/raw at night."
+          );
+        if (dosha.includes("Pitta"))
+          diet.push(
+            "Pitta tip: cooling foods: cucumbers, coconut, avoid spicy or very hot meals."
+          );
+        if (dosha.includes("Kapha"))
+          diet.push(
+            "Kapha tip: lighter meals, more peppery/spicy flavors and warm drinks."
+          );
+
+        // Yoga / Meditation
+        let yoga = [];
+        if (phys < 60)
+          yoga.push(
+            "Gentle asanas: Tadasana, Vrikshasana, Bhujangasana — 15-20 mins."
+          );
+        else
+          yoga.push(
+            "Energetic practice: Surya Namaskar 6-8 rounds, Warrior series — 25-35 mins."
+          );
+
+        if (ment < 60)
+          yoga.push(
+            "Breathing & calm: Nadi Shodhana (alternate nostril), Sukhasana with deep breathing — 10 mins."
+          );
+        else
+          yoga.push(
+            "Mindfulness & focus: 10 mins breath meditation or Kapalabhati (short bursts)."
+          );
+
+        // Daily Routine
+        const routine = [];
+        routine.push("Wake up: 6:00 - hydrate & 5–10 min breathing");
+        routine.push(
+          phys < 60
+            ? "Morning: gentle yoga + 20 min walk"
+            : "Morning: energetic yoga/short run (30 min)"
+        );
+        routine.push(
+          "Meals: breakfast 7:30–8:30, lunch 13:00, light dinner before 9 pm"
+        );
+        if (ment < 60)
+          routine.push("Evening: 10–15 min mindful meditation before bed");
+
+        return { diet, yoga, routine };
+      }
+
+      /* ---------- Reports (Daily / Weekly / Monthly) ---------- */
+      function switchReportTab(range) {
+        const tabs = document.querySelectorAll(".tab");
+        tabs.forEach((t) => t.classList.remove("active"));
+        // set active
+        document.querySelectorAll(".tab").forEach((t) => {
+          if (t.innerText.toLowerCase() === range) t.classList.add("active");
+        });
+        renderReports(range);
+      }
+
+      function renderReports(range = "daily") {
+        const cur = getCurrent();
+        if (!cur) {
+          alert("Please login to see reports.");
+          switchAuth("login");
+          return;
+        }
+        const users = readUsers();
+        const user = users[cur];
+        const history = (user.history || []).slice().reverse(); // newest first
+
+        if (history.length === 0) {
+          document.getElementById("summaryText").innerText =
+            "No assessments yet. Take a test to generate personalized plans and reports.";
+          document.getElementById("dietChart").innerText = "—";
+          document.getElementById("yogaChart").innerText = "—";
+          document.getElementById("routineChart").innerText = "—";
+          return;
+        }
+
+        // determine time window
+        const nowTs = now();
+        let startTs = 0;
+        if (range === "daily") startTs = nowTs - 24 * 60 * 60 * 1000;
+        else if (range === "weekly") startTs = nowTs - 7 * 24 * 60 * 60 * 1000;
+        else startTs = nowTs - 30 * 24 * 60 * 60 * 1000;
+
+        const windowRecords = history.filter((r) => r.ts >= startTs);
+
+        // compute averages: for physical & mental score presence
+        let physSum = 0,
+          physCount = 0,
+          mentSum = 0,
+          mentCount = 0;
+        const doshaTally = {}; // count doshas
+        windowRecords.forEach((r) => {
+          if (r.physicalScore !== undefined) {
+            physSum += r.physicalScore;
+            physCount++;
+          }
+          if (r.mentalScore !== undefined) {
+            mentSum += r.mentalScore;
+            mentCount++;
+          }
+          if (r.dosha) {
+            doshaTally[r.dosha] = (doshaTally[r.dosha] || 0) + 1;
+          }
+        });
+        const physAvg = physCount ? Math.round(physSum / physCount) : null;
+        const mentAvg = mentCount ? Math.round(mentSum / mentCount) : null;
+        // choose most frequent dosha
+        let doshaMost = "";
+        let maxd = 0;
+        Object.keys(doshaTally).forEach((k) => {
+          if (doshaTally[k] > maxd) {
+            maxd = doshaTally[k];
+            doshaMost = k;
+          }
+        });
+
+        const agg = {
+          physicalAvgPercent: physAvg,
+          mentalAvgPercent: mentAvg,
+          dosha: doshaMost || "",
+        };
+
+        // build plan from aggregated data
+        const plan = buildPlanFromAggregated(agg);
+
+        // populate UI
+        const summaryParts = [];
+        if (physAvg !== null)
+          summaryParts.push(`<strong>Physical:</strong> ${physAvg}%`);
+        if (mentAvg !== null)
+          summaryParts.push(`<strong>Mental:</strong> ${mentAvg}%`);
+        if (doshaMost)
+          summaryParts.push(`<strong>Prakriti:</strong> ${doshaMost}`);
+        document.getElementById("summaryText").innerHTML =
+          summaryParts.join(" • ");
+
+        document.getElementById("dietChart").innerHTML =
+          "<ul>" + plan.diet.map((x) => `<li>${x}</li>`).join("") + "</ul>";
+        document.getElementById("yogaChart").innerHTML =
+          "<ul>" + plan.yoga.map((x) => `<li>${x}</li>`).join("") + "</ul>";
+        document.getElementById("routineChart").innerHTML =
+          "<ol>" + plan.routine.map((x) => `<li>${x}</li>`).join("") + "</ol>";
+
+        // also update last result panel
+        updateLastResult();
+      }
+
+      /* ---------- History list ---------- */
+      function renderHistory() {
+        const cur = getCurrent();
+        if (!cur) {
+          alert("Please login to view history.");
+          switchAuth("login");
+          return;
+        }
+        const users = readUsers();
+        const user = users[cur];
+        const list = document.getElementById("historyList");
+        list.innerHTML = "";
+        const history = (user.history || []).slice().reverse();
+        if (history.length === 0) {
+          list.innerHTML =
+            '<div class="small muted">No previous assessments found.</div>';
+          return;
+        }
+        history.forEach((item) => {
+          const div = document.createElement("div");
+          div.className = "history-item";
+          const t = fmtDate(item.ts);
+          let body = `<div style="display:flex;justify-content:space-between;align-items:center"><div><strong>${item.type.toUpperCase()}</strong><div class="small muted">${t}</div></div>`;
+          body += `<div class="small muted">`;
+          if (item.physicalScore)
+            body += `Physical: ${item.physicalScore}% <br/>`;
+          if (item.mentalScore) body += `Mental: ${item.mentalScore}% <br/>`;
+          if (item.dosha) body += `Dosha: ${item.dosha} <br/>`;
+          body += `</div></div>`;
+          div.innerHTML = body;
+          list.appendChild(div);
+        });
+      }
+
+      /* ---------- UI update helpers ---------- */
+      function updateProfilePanel() {
+        const cur = getCurrent();
+        const users = readUsers();
+        if (!cur) return;
+        const user = users[cur];
+        document.getElementById("displayName").innerText = user.name || "User";
+        document.getElementById("displayEmail").innerText = user.email || "";
+        document.getElementById("avatarDisplay").innerText = user.name
+          ? user.name.charAt(0).toUpperCase()
+          : "U";
+        // show last result quick
+        const history = user.history || [];
+        if (history.length) {
+          const last = history[history.length - 1];
+          const summary = `${last.type.toUpperCase()} - ${fmtDate(last.ts)}`;
+          let detail = "";
+          if (last.physicalScore) detail += `Physical ${last.physicalScore}% `;
+          if (last.mentalScore) detail += `Mental ${last.mentalScore}% `;
+          if (last.dosha) detail += `Dosha ${last.dosha}`;
+          document.getElementById(
+            "lastResult"
+          ).innerHTML = `<strong>${summary}</strong><div class="small muted">${detail}</div>`;
+        } else {
+          document.getElementById("lastResult").innerText = "No results yet.";
+        }
+      }
+
+      /* ---------- show last result when logging in ---------- */
+      function updateLastResult() {
+        const cur = getCurrent();
+        if (!cur) return;
+        const users = readUsers();
+        const user = users[cur];
+        const h = user.history || [];
+        if (h.length === 0) {
+          document.getElementById("lastResult").innerText = "No results yet.";
+          return;
+        }
+        const last = h[h.length - 1];
+        document.getElementById(
+          "lastResult"
+        ).innerHTML = `<div><strong>${last.type.toUpperCase()}</strong> <div class="small muted">${fmtDate(
+          last.ts
+        )}</div></div>`;
+      }
+
+      /* ---------- Quick protectors ---------- */
+      function startIfLogged(section) {
+        const cur = getCurrent();
+        if (!cur) {
+          alert("Please login to proceed.");
+          switchAuth("login");
+          return false;
+        }
+        showSection(section);
+        return true;
+      }
+
+      /* ---------- Event wiring ---------- */
+      document.getElementById("navHome").onclick = () =>
+        showSection("homeSection");
+      document.getElementById("navPrakriti").onclick = () => {
+        const cur = getCurrent();
+        if (!cur) {
+          alert("Please login to access Prakriti Test.");
+          switchAuth("login");
+        } else showSection("testsSection");
+      };
+      document.getElementById("navTests").onclick = () => {
+        const cur = getCurrent();
+        if (!cur) {
+          alert("Please login.");
+          switchAuth("login");
+        } else showSection("testsSection");
+      };
+      document.getElementById("navProfile").onclick = () => {
+        const cur = getCurrent();
+        if (!cur) switchAuth("login");
+        else {
+          showSection("homeSection");
+          updateProfilePanel();
+        }
+      };
+
+      document.getElementById("navHome").onclick();
+      document.getElementById("logoutBtn").onclick = () => {
+        localStorage.removeItem(STORAGE_CURRENT);
+        updateUIForAuth();
+        showSection("homeSection");
+      };
+
+      /* When the page loads, if a user is logged in then show profile info */
+      (function init() {
+        const cur = getCurrent();
+        if (cur) {
+          updateUIForAuth();
+          updateProfilePanel();
+        }
+      })();
+    </script>
+  </body>
+</html>
